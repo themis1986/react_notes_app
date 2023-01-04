@@ -52,7 +52,7 @@ body {
 
 section {
   overflow-y: scroll;
-  padding: 40px
+  padding: 40px;
 }
 
 /** Elements */
@@ -251,5 +251,6 @@ ul {
 @media (max-width: 900px) {
   .main {
     grid-template-columns: 1fr;
+    height: auto;
   }
 }
