@@ -276,6 +276,9 @@ function Fact(props) {
   const { fact, setFacts } = props;
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const isDisputed =
+    fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
+
   const handleVote = async (columnName) => {
     setIsUpdating(true);
     const { data: updatedFact, error } = await supabase
@@ -295,6 +298,7 @@ function Fact(props) {
   return (
     <li className="fact">
       <p>
+        {isDisputed ? <span className="disputed">[⛔️ DISPUTED]</span> : null}
         {fact.text}
         <a
           className="source"
@@ -315,10 +319,16 @@ function Fact(props) {
         {fact.category}
       </span>
       <div className="vote-buttons">
-        <button onClick={() => handleVote("votesInteresting")} disabled={isUpdating}>
+        <button
+          onClick={() => handleVote("votesInteresting")}
+          disabled={isUpdating}
+        >
           👍 {fact.votesInteresting}
         </button>
-        <button onClick={() => handleVote("votesMindblowing")} disabled={isUpdating}>
+        <button
+          onClick={() => handleVote("votesMindblowing")}
+          disabled={isUpdating}
+        >
           🤯 {fact.votesMindblowing}
         </button>
         <button onClick={() => handleVote("votesFalse")} disabled={isUpdating}>
