@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import supabase from "./supabase";
+
 import "./style.css";
 
 const CATEGORIES = [
@@ -58,7 +60,15 @@ function isValidHttpUrl(string) {
 
 function App() {
   const [showForm, setShowForm] = useState(false);
-  const [facts, setFacts] = useState(initialFacts);
+  const [facts, setFacts] = useState([]);
+
+  useEffect(() => {
+    const getFacts = async () => {
+      const { data: facts, error } = await supabase.from("facts").select("*");
+      setFacts(facts)
+    };
+    getFacts();
+  }, []);
 
   const appTitle = "Today I Learned !";
 
